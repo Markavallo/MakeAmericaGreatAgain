@@ -39,6 +39,8 @@
     margin: 15px 0;
     display: flex;
     gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
   button {
     background: black;
@@ -75,7 +77,6 @@
     text-align: left;
     width: 100%;
   }
-  /* Stile footer bandiera */
   .us-footer {
     position: absolute;
     bottom: 10px;
@@ -107,17 +108,17 @@
   <div class="buttons">
     <button id="btnUpdate">Aggiorna posizione</button>
     <button id="btnAcquire" style="display:none;">Prova acquisizione</button>
+    <button id="btnReset">Reset gioco</button>
   </div>
 
   <div class="next-data" id="nextData">Next Data: —</div>
   <div class="status" id="status"></div>
   <div class="data-list" id="dataList"></div>
 
-  <!-- Footer USA -->
   <div class="us-footer">
     <div class="us-text">
       <div id="us-date"></div>
-      <div id="us-code">DEFENDERS OF LIBERTY - ORBITAL COMMAND</div>
+      <div id="us-code">ORBITAL COMMAND</div>
     </div>
     <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" alt="USA Flag">
   </div>
@@ -127,9 +128,9 @@
 // === CONFIG ===
 const targets = [
   { name: "Data 1", desc: "Giacimenti di ghiaccio acquifero", lat: 44.474205, lon: 6.9346713 },
-  { name: "Data 2", desc: "Tempeste di polvere globali",       lat: 44.481347, lon: 6.9224493 },
-  { name: "Data 3", desc: "Radiazione cosmica solare",         lat: 44.498383, lon: 6.9187983 },
-  { name: "Data 4", desc: "Gravità ridotta",                   lat: 44.480915, lon: 6.9413713 }
+  { name: "Data 2", desc: "Tempeste di polvere globali", lat: 44.481347, lon: 6.9224493 },
+  { name: "Data 3", desc: "Radiazione cosmica solare", lat: 44.498383, lon: 6.9187983 },
+  { name: "Data 4", desc: "Gravità ridotta", lat: 44.480915, lon: 6.9413713 }
 ];
 const ACQUIRE_RANGE = 20; // metri
 
@@ -138,7 +139,7 @@ let collected = JSON.parse(localStorage.getItem("collectedData") || "[]");
 if (collected.length === 0) collected = targets.map(() => null);
 
 let currentPosition = null;
-let nextIndex = null;  // indice prossimo target da acquisire
+let nextIndex = null;  
 
 // === FUNZIONI ===
 function haversine(lat1, lon1, lat2, lon2) {
@@ -158,13 +159,13 @@ function updateCoordsUI() {
     document.getElementById("nextData").textContent = `Next Data: —`;
     document.getElementById("status").textContent = "";
     document.getElementById("btnAcquire").style.display = "none";
+    renderDataList();
     return;
   }
   const { latitude: lat, longitude: lon, altitude: alt } = currentPosition.coords;
   document.getElementById("coords").textContent =
     `Lat: ${lat.toFixed(6)} Lon: ${lon.toFixed(6)} Alt: ${alt !== null ? alt.toFixed(1) : "—"}m`;
 
-  // Trova prossimo target non raccolto più vicino
   nextIndex = null;
   let nextDist = Infinity;
   for (let i = 0; i < targets.length; i++) {
@@ -234,15 +235,26 @@ function getPosition() {
   );
 }
 
+function resetGame() {
+  if (confirm("Sei sicuro di voler resettare il gioco?")) {
+    localStorage.removeItem("collectedData");
+    collected = targets.map(() => null);
+    updateCoordsUI();
+    document.getElementById("status").textContent = "Gioco resettato.";
+  } else {
+    document.getElementById("status").textContent = "Reset annullato.";
+  }
+}
+
 // === EVENTI ===
 document.getElementById("btnUpdate").addEventListener("click", getPosition);
 document.getElementById("btnAcquire").addEventListener("click", acquireData);
+document.getElementById("btnReset").addEventListener("click", resetGame);
 
 // === AVVIO ===
 renderDataList();
 updateCoordsUI();
 
-// === Aggiorna data footer ===
 const now = new Date();
 document.getElementById("us-date").textContent =
   now.toLocaleDateString("en-US", { month: '2-digit', day: '2-digit', year: 'numeric' });
