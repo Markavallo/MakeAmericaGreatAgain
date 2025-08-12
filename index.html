@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>GPS Treasure Hunt - American Style</title>
+<title>GPS Treasure Hunt - Orbital Command</title>
 <style>
   html, body {
     margin: 0; padding: 0;
@@ -95,6 +95,8 @@
     display: flex;
     flex-direction: column;
     text-align: right;
+    letter-spacing: 1px;
+    text-transform: uppercase;
   }
 </style>
 </head>
@@ -115,7 +117,7 @@
   <div class="us-footer">
     <div class="us-text">
       <div id="us-date"></div>
-      <div id="us-code">.... .. / --. .-.. --- .-. -.--</div> <!-- "HI GLORY" in morse -->
+      <div id="us-code">DEFENDERS OF LIBERTY - ORBITAL COMMAND</div>
     </div>
     <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg" alt="USA Flag">
   </div>
@@ -124,10 +126,10 @@
 <script>
 // === CONFIG ===
 const targets = [
-  { name: "Data 1", lat: 44.324795, lon: 7.554488 },
-  { name: "Data 2", lat: 44.324613, lon: 7.5530458 },
-  { name: "Data 3", lat: 44.32436, lon: 7.5533983 },
-  { name: "Data 4", lat: 44.3250311, lon: 7.5539705 }
+  { name: "Data 1", lat: 44.474205, lon: 6.9346713 },
+  { name: "Data 2", lat: 44.481347, lon: 6.9224493 },
+  { name: "Data 3", lat: 44.498383, lon: 6.9187983 },
+  { name: "Data 4", lat: 44.480915, lon: 6.9413713 }
 ];
 const ACQUIRE_RANGE = 20; // metri
 
