@@ -128,11 +128,11 @@
 // === CONFIG ===
 const targets = [
   { name: "Data 1", desc: "Giacimenti di ghiaccio", lat: 44.474205, lon: 6.9346713 },
-  { name: "Data 2", desc: "Tempeste di polvere globali", lat: 44.481347, lon: 6.9224493 },
-  { name: "Data 3", desc: "Radiazione cosmica solare", lat: 44.498383, lon: 6.9187983 },
+  { name: "Data 2", desc: "Tempeste di polvere globali", lat: 44.485974,  lon: 6.926768 },
+  { name: "Data 3", desc: "Radiazione cosmica solare", lat: 44.492754, lon: 6.922704 },
   { name: "Data 4", desc: "Gravità", lat: 44.480915, lon: 6.9413713 }
 ];
-const ACQUIRE_RANGE = 20; // metri
+const ACQUIRE_RANGE = 50; // metri
 
 // === STATO ===
 let collected = JSON.parse(localStorage.getItem("collectedData") || "[]");
